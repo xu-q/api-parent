@@ -1,0 +1,41 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8082
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: path1
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+          filters:
+            - AddRequestHeader=xu, 1234
+            - AddRequestParameter=name, blue
+            #降级处理
+#            - name: CircuitBreaker
+#              args:
+#                name: myCircuitBreaker
+#                fallbackUri: forward:/fallback
+#        - id: api-fallback
+#          uri: http://localhost:8081
+#          predicates:
+#            - Path=/fallback
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
