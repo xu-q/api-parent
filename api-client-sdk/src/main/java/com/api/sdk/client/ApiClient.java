@@ -36,18 +36,6 @@ public class ApiClient {
         return result;
     }
 
-    public String getUserByPost(User user) {
-        String jsonStr = JSONUtil.toJsonStr(user);
-        HttpResponse httpResponse = HttpRequest.post(GATEWAY_HOST + "api/getUser")
-                .addHeaders(buildHeaderMap())
-                .body(jsonStr)
-                .execute();
-        System.out.println(httpResponse.getStatus());
-        String result = httpResponse.body();
-        System.out.println(result);
-        return result;
-    }
-
     private Map<String, String> buildHeaderMap() {
         Map<String, String> map = new HashMap<>();
         map.put("accessKey", accessKey);
