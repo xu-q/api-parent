@@ -4,7 +4,6 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
-import com.api.sdk.model.User;
 import com.api.sdk.utils.SignUtil;
 
 import java.util.HashMap;
@@ -29,6 +28,16 @@ public class ApiClient {
         HttpResponse httpResponse = HttpRequest.post(GATEWAY_HOST + "api/weatherQuery")
                 .addHeaders(buildHeaderMap())
                 .body(JSONUtil.toJsonStr(params))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public String dailyEnglish() {
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "api/dailyEnglish")
+                .addHeaders(buildHeaderMap())
                 .execute();
         System.out.println(httpResponse.getStatus());
         String result = httpResponse.body();

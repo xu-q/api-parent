@@ -17,4 +17,9 @@ public class ApiController {
     public String weatherQuery(@RequestBody Map<String, String> map) {
         return apiService.weatherQuery(map);
     }
+
+    @GetMapping("/dailyEnglish")
+    public String dailyEnglish() {
+        return apiService.dailyEnglish();
+    }
 }

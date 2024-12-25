@@ -13,4 +13,5 @@ api:
 #外部openid
 openId:
   weather: b91ba70e7e1e088818f64a3465780ba4
+  deilyEnglish: ca87ef4b24035f6d4bb4426eca6df6f7
 
