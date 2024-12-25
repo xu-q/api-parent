@@ -1,6 +1,7 @@
 package com.api.service.impl;
 
 import com.api.service.ApiService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -9,23 +10,23 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class WeatherServiceImpl implements ApiService {
 
+    @Value("${openId.weather}")
+    private String openId;
+
     @Override
     public String weatherQuery(Map<String, String> map) {
-        String apiKey = "b91ba70e7e1e088818f64a3465780ba4";
         String apiUrl = "http://apis.juhe.cn/simpleWeather/query";
 
-        HashMap<String, String> parmMap = new HashMap<>();
-        map.put("key", apiKey);
+        map.put("key", openId);
         map.put("city", map.get("city"));
 
-        StringBuffer response = new StringBuffer("");
+        StringBuffer response;
         try {
             URL url = new URL(String.format("%s?%s", apiUrl, params(map)));
             BufferedReader in = new BufferedReader(new InputStreamReader((url.openConnection()).getInputStream()));
