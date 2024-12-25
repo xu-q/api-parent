@@ -3,7 +3,14 @@ server:
   port: 8081
   servlet:
     context-path: /api
+
+#内部openid
 api:
   client:
     access-key: xuqing
     secret-key: a1b2c3d4
+
+#外部openid
+openId:
+  weather: b91ba70e7e1e088818f64a3465780ba4
+
