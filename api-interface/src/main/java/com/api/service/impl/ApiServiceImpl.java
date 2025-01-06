@@ -24,27 +24,23 @@ public class ApiServiceImpl implements ApiService {
     private String openIdDeilyEnglish;
 
     @Override
-    public String weatherQuery(Map<String, String> map) {
+    public String weatherQuery(HashMap<String, String> map) {
         String apiUrl = "http://apis.juhe.cn/simpleWeather/query";
 
         map.put("key", openIdWeather);
         map.put("city", map.get("city"));
 
-        StringBuffer response;
-        try {
-            URL url = new URL(String.format("%s?%s", apiUrl, params(map)));
-            BufferedReader in = new BufferedReader(new InputStreamReader((url.openConnection()).getInputStream()));
-            String inputLine;
-            response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            System.out.println(response);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return response.toString();
+        return requestConnection(apiUrl, map);
+    }
+
+    @Override
+    public String dailyEnglish() {
+        String apiUrl = "http://apis.juhe.cn/fapigx/everyday/query";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("key", openIdDeilyEnglish);
+
+        return requestConnection(apiUrl, map);
     }
 
     public static String params(Map<String, String> map) {
@@ -60,13 +56,7 @@ public class ApiServiceImpl implements ApiService {
                 .collect(Collectors.joining("&"));
     }
 
-    @Override
-    public String dailyEnglish() {
-        String apiUrl = "http://apis.juhe.cn/fapigx/everyday/query";
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("key", openIdDeilyEnglish);
-
+    private String requestConnection(String apiUrl, HashMap<String, String> map) {
         StringBuffer response;
         try {
             URL url = new URL(String.format("%s?%s", apiUrl, params(map)));
